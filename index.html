@@ -16,42 +16,44 @@
 
   /* ============ THEME TOKENS ============ */
   :root[data-theme="dark"]{
-    --bg:#15130F;
-    --bg-raised:#1D1A14;
-    --bg-raised-2:#242019;
-    --bg-sidebar:#191610;
-    --accent:#F2793B;       /* solid fills: buttons, progress, badges */
-    --accent-text:#F2793B;  /* text/icon/heading color on page bg */
-    --accent-2:#F7B267;     /* secondary highlight / hover text */
-    --ink:#1F1208;          /* dark text drawn on top of solid accent fills */
-    --text:#F2EDE4;
-    --text-dim:#B8AFA0;
-    --text-dimmer:#8A8172;
-    --border:#33301F88;
-    --border-soft:#2A2620;
-    --success:#8FBF7F;
-    --locked:#4A473E;
+    --bg:#121013;
+    --bg-raised:#1F1B1C;
+    --bg-raised-2:#2B2527;
+    --bg-sidebar:#181516;
+    --accent:#E8823F;       /* solid fills: buttons, progress, badges */
+    --accent-text:#F0954F;  /* text/icon/heading color on page bg */
+    --accent-2:#F4B172;     /* secondary highlight / hover text */
+    --ink:#1C1006;          /* dark text drawn on top of solid accent fills */
+    --text:#F7F4EE;
+    --text-dim:#CBC4B9;
+    --text-dimmer:#948C82;
+    --border:rgba(255,255,255,0.14);
+    --border-soft:rgba(255,255,255,0.09);
+    --success:#7FCB74;
+    --success-ink:#12300d;
+    --locked:#57515490;
     --cream-bg:#F5EDDA;
     --cream-text:#3D3425;
-    --overlay:rgba(10,9,6,0.65);
+    --overlay:rgba(8,7,8,0.7);
   }
   :root[data-theme="light"]{
-    --bg:#FBF6EE;
+    --bg:#F5F1E9;
     --bg-raised:#FFFFFF;
-    --bg-raised-2:#F3E9D8;
+    --bg-raised-2:#EFE7D6;
     --bg-sidebar:#FFFFFF;
-    --accent:#E2672B;
-    --accent-text:#A6461B;
+    --accent:#D9622A;
+    --accent-text:#9C4014;
     --accent-2:#B5581F;
-    --ink:#241206;
-    --text:#2B2013;
-    --text-dim:#6B5D47;
-    --text-dimmer:#8A7A61;
-    --border:#00000018;
-    --border-soft:#00000012;
-    --success:#1E8A4C;
-    --locked:#C9BEA9;
-    --cream-bg:#FFFDF6;
+    --ink:#231204;
+    --text:#231A10;
+    --text-dim:#564A38;
+    --text-dimmer:#786A52;
+    --border:rgba(35,25,10,0.16);
+    --border-soft:rgba(35,25,10,0.10);
+    --success:#187A40;
+    --success-ink:#F5FBF2;
+    --locked:#D9D0BE;
+    --cream-bg:#FBF2DE;
     --cream-text:#3D3425;
     --overlay:rgba(40,30,15,0.45);
   }
@@ -293,7 +295,7 @@
   .day-header-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:2px;}
   .day-check-badge{
     width:26px;height:26px;border-radius:50%;
-    background:var(--success);color:#0c1a08;
+    background:var(--success);color:var(--success-ink);
     display:flex;align-items:center;justify-content:center;flex-shrink:0;
   }
 
@@ -1239,7 +1241,12 @@
     if(reduceMotion) return;
 
     const layer = document.getElementById("confetti-layer");
-    const colors = ["#F2793B", "#F7B267", "#F2EDE4"];
+    const rootStyle = getComputedStyle(document.documentElement);
+    const colors = [
+      rootStyle.getPropertyValue("--accent").trim(),
+      rootStyle.getPropertyValue("--accent-2").trim(),
+      rootStyle.getPropertyValue("--text").trim()
+    ];
     for(let i = 0; i < 26; i++){
       const p = document.createElement("div");
       p.className = "confetti-piece";
