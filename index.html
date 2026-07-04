@@ -221,15 +221,6 @@
     line-height:1.5;
   }
   textarea:focus{outline:2px solid var(--accent);outline-offset:1px;}
-  .wordcount{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:8px;
-    font-size:.78rem;
-    color:var(--text-dimmer);
-  }
-  .wordcount.ok{color:var(--success);}
   .submit-btn{
     margin-top:14px;
     width:100%;
@@ -756,12 +747,6 @@
   }
 
   /* ---------- Reflection widgets ---------- */
-  function countWords(text){
-    const trimmed = text.trim();
-    if(!trimmed) return 0;
-    return trimmed.split(/\s+/).length;
-  }
-
   function renderReflectionBlock(day){
     const s = document.createElement("section");
     s.className = "block";
@@ -785,36 +770,16 @@
     s.appendChild(promptP);
 
     const ta = document.createElement("textarea");
-    ta.placeholder = "Write your reflection here...";
+    ta.placeholder = "Write your reflection here (optional)...";
     ta.value = progress.reflections[day.day] || "";
     s.appendChild(ta);
-
-    const wc = document.createElement("div");
-    wc.className = "wordcount";
-    const wcSpan = document.createElement("span");
-    const minSpan = document.createElement("span");
-    minSpan.textContent = "Minimum 100 words";
-    wc.appendChild(wcSpan);
-    wc.appendChild(minSpan);
-    s.appendChild(wc);
 
     const btn = document.createElement("button");
     btn.className = "submit-btn";
     btn.textContent = "Submit Reflection";
     s.appendChild(btn);
 
-    function updateState(){
-      const words = countWords(ta.value);
-      wcSpan.textContent = `${words} / 100 words`;
-      const ok = words >= 100;
-      wc.className = "wordcount" + (ok ? " ok" : "");
-      btn.disabled = !ok;
-    }
-    ta.addEventListener("input", updateState);
-    updateState();
-
     btn.onclick = () => {
-      if(countWords(ta.value) < 100) return;
       markComplete(day.day, ta.value);
       celebrate();
       render();
@@ -1101,8 +1066,8 @@
           <p class="faq-a">Your progress just waits for you — there's no penalty. Come back and submit that day's reflection whenever you're ready; the next day unlocks right after.</p>
         </div>
         <div class="placeholder-item">
-          <div class="faq-q">Do Sundays need a 100-word reflection too?</div>
-          <p class="faq-a">No. Sundays are lighter "Connecting the Dots" days — just work through the recap questions and tap through to unlock Monday.</p>
+          <div class="faq-q">Do I have to write anything to unlock the next day?</div>
+          <p class="faq-a">No — the reflection box is there if you want it, but you can submit it blank and move straight on to the next day.</p>
         </div>
         <div class="placeholder-item">
           <div class="faq-q">What is Challenge Week?</div>
